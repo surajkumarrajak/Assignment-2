@@ -1,7 +1,7 @@
 pipeline{
     agent any
     environment {
-        AWS_ACCOUNT_ID="2702-9103-6751"
+        AWS_ACCOUNT_ID="270291036751"
         AWS_DEFAULT_REGION="us-east-2" 
         IMAGE_REPO_NAME="assignment-2"
         IMAGE_TAG="lts"
