@@ -4,7 +4,7 @@ pipeline{
         AWS_ACCOUNT_ID="270291036751"
         AWS_DEFAULT_REGION="us-east-2" 
         IMAGE_REPO_NAME="assignment-2"
-        IMAGE_TAG="lts"
+        IMAGE_TAG="maven-test"
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
     }
     stages {
