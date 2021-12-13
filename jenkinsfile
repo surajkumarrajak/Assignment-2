@@ -1,7 +1,7 @@
 pipeline{
     agent any
     environment {
-        AWS_ACCOUNT_ID="259447875661"
+        AWS_ACCOUNT_ID="270291036751"
         AWS_DEFAULT_REGION="us-east-2" 
         IMAGE_REPO_NAME="assignment-2"
         IMAGE_TAG="lts"
@@ -100,7 +100,7 @@ pipeline{
         }
         stage('Push image') {
             steps {
-                withDockerRegistry([url: "https://${REPOSITORY_URI}",credentialsId: "ecr:${AWS_DEFAULT_REGION}:my.aws.credentials.pers"]) {
+                withDockerRegistry([url: "https://${REPOSITORY_URI}",credentialsId: "ecr:${AWS_DEFAULT_REGION}:my.aws.credentials"]) {
                 sh "docker push ${IMAGE_REPO_NAME}:${IMAGE_TAG}"
                 }
             }
