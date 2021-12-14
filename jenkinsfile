@@ -116,7 +116,7 @@ pipeline{
         stage('Push .tf - s3'){
             steps{
                 script{
-                    sh "aws s3 cp /home/lab/Assignment-2/ s3://assignment-2-s3 --recursive --include *.tf"
+                    sh "aws s3 cp /home/lab/Assignment-2/*.tf s3://assignment-2-s3"
                 }
             }
         }
