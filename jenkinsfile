@@ -121,13 +121,13 @@ pipeline{
                 }
             }
         }
-        stage('Terraform Init') {
+       /* stage('Terraform Init') {
             steps {
                 dir("terraform"){
                     sh 'terraform init'
                 }
             }
-        }
+        }*/
     
         stage('Terraform apply') {
             steps {
