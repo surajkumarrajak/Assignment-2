@@ -6,6 +6,7 @@ pipeline{
         IMAGE_REPO_NAME="assignment-2"
         IMAGE_TAG="maven-test"
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
+        TERRAFORM_DIR = "$WORKSPACE/terraform"
     }
     stages {
         stage ('initialize'){
@@ -122,13 +123,17 @@ pipeline{
         }
         stage('Terraform Init') {
             steps {
-                sh label: '', script: 'terraform init'
+                script{
+                    sh './terraform/terraform init'
+                }
             }
         }
     
         stage('Terraform apply') {
             steps {
-                sh label: '', script: 'terraform apply --auto-approve'
+                script{
+                    sh './terraform/terraform apply --auto-approve'
+                }
             }     
         }
     }
