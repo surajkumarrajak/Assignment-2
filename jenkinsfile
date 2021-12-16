@@ -121,20 +121,20 @@ pipeline{
                 }
             }
         }
-       /* stage('Terraform Init') {
+        stage('Terraform Init') {
             steps {
                 dir("terraform"){
                     sh 'terraform init'
                 }
             }
-        }*/
+        }
     
-        stage('Terraform apply') {
+        /*stage('Terraform apply') {
             steps {
                 script{
                     sh './terraform/terraform apply --auto-approve'
                 }
             }     
-        }
+        }*/
     }
 }
