@@ -123,8 +123,8 @@ pipeline{
         }
         stage('Terraform Init') {
             steps {
-                script{
-                    sh './terraform/terraform init'
+                dir("terraform"){
+                    sh 'terraform init'
                 }
             }
         }
