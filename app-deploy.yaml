@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+spec:
+  containers: 
+    - name:  hello-world
+      image: 270291036751.dkr.ecr.us-east-2.amazonaws.com/assignment-2:hello-world
+      command:
+      - cat
+      tty: true
