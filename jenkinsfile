@@ -127,6 +127,11 @@ pipeline{
                     sh 'terraform init'
                 }
             }
+            steps{
+                dir("terraforrm"){
+                    sh 'terraform plan -out=output.txt'
+                }
+            }
         }
     
         /*stage('Terraform apply') {
