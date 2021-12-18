@@ -133,11 +133,13 @@ pipeline{
         }
     
         stage('App Deploy-EKS') {
-            kubernetesDeploy(
-                configs: 'app-deploy.yaml',
-                kubeconfigId: 'k8s',
-                enableConfigSubstitution: true
-            )       
+            steps{
+                kubernetesDeploy(
+                    configs: 'app-deploy.yaml',
+                    kubeconfigId: 'k8s',
+                    enableConfigSubstitution: true
+                )
+            }       
         }
     }
 }
