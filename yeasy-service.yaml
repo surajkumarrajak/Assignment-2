@@ -4,7 +4,7 @@ metadata:
   name: yeasy-service
 spec:
   selector:
-    app: yeasy-deploy
+    app: web
   ports:
     - port: 8766
       targetPort: 9377

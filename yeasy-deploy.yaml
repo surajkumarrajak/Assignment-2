@@ -1,10 +1,12 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
   name: simple-web
   labels:
-    app: app
+    app: web
 spec:
   containers: 
     - name:   simple-web
       image:  yeasy/simple-web:latest
+      ports:
+        - containerPort: 8000
