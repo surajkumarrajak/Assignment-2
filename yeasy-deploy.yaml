@@ -9,4 +9,4 @@ spec:
     - name:   simple-web
       image:  yeasy/simple-web:latest
       ports:
-        - containerPort: 8000
+        - containerPort: 80
