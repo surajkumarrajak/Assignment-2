@@ -6,5 +6,5 @@ metadata:
     app: app
 spec:
   containers: 
-    - name:  hello-world
+    - name:   simple-web
       image:  yeasy/simple-web:latest
