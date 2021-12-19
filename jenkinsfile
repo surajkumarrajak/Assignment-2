@@ -129,8 +129,29 @@ pipeline{
                     sh 'terraform apply output.txt'
                 }
             }
+            post {
+                success{
+                    emailext (
+                        from: 'robotm095@gmail.com',
+                        to: 'surajkumarrajak14@gmail.com,robotm095@gmail.com,sdeeksha167@gmail.com',
+                        subject: "Deployment Approval: ${currentBuild.fullDisplayName}",
+                        body: "EKS provisioned successfully, please go to the url ${env.BUILD_URL} to approve for application deployment"
+                        )
+                }
+            }
 
         }
+        stage('Approval') {
+            // no agent, so executors are not used up when waiting for approvals
+            agent none
+            steps {
+                script {
+                    def deploymentDelay = input id: 'Deploy', message: 'Deploy to EKS?', submitter: 'suraj,DevOps', parameters: [choice(choices: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24'], description: 'Hours to delay deployment?', name: 'deploymentDelay')]
+                    sleep time: deploymentDelay.toInteger(), unit: 'HOURS'
+                }
+            }
+        }
+
     
        /* stage('App Deploy-EKS') {
             steps{
