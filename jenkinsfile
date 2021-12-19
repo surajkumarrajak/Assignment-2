@@ -132,15 +132,25 @@ pipeline{
 
         }
     
-        stage('App Deploy-EKS') {
+       /* stage('App Deploy-EKS') {
             steps{
                 kubernetesDeploy(
                     configs: 'app-deploy.yaml',
                     kubeconfigId: 'k8s',
                     enableConfigSubstitution: true
                 )
-                /*sh "kubectl apply -f app-deploy.yaml"*/
-            }       
+                
+            }    
+        }*/
+        stage('App Deploy-EKS') {
+            steps{
+                kubernetesDeploy(
+                    configs: 'app-service.yaml',
+                    kubeconfigId: 'k8s',
+                    enableConfigSubstitution: true
+                )
+                
+            }    
         }
     }
 }
