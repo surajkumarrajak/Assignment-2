@@ -142,10 +142,30 @@ pipeline{
                 
             }    
         }*/
-        stage('App Deploy-EKS') {
+        /*stage('App Deploy-EKS') {
             steps{
                 kubernetesDeploy(
                     configs: 'app-service.yaml',
+                    kubeconfigId: 'k8s',
+                    enableConfigSubstitution: true
+                )
+                
+            }    
+        }*/
+        stage('Sample Deploy-EKS') {
+            steps{
+                kubernetesDeploy(
+                    configs: 'yeasy-deploy.yaml',
+                    kubeconfigId: 'k8s',
+                    enableConfigSubstitution: true
+                )
+                
+            }    
+        }
+        stage('Service LB Expose-EKS') {
+            steps{
+                kubernetesDeploy(
+                    configs: 'yeasy-service.yaml',
                     kubeconfigId: 'k8s',
                     enableConfigSubstitution: true
                 )

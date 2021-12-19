@@ -1,0 +1,10 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-web
+  labels:
+    app: app
+spec:
+  containers: 
+    - name:  hello-world
+      image:  yeasy/simple-web:latest

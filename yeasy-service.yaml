@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: yeasy-service
+spec:
+  selector:
+    app: yeasy-deploy
+  ports:
+    - port: 8766
+      targetPort: 9377
+  type: LoadBalancer
