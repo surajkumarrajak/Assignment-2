@@ -10,10 +10,19 @@ pipeline{
     }
     stages {
         stage ('initialize'){
-            steps {
-                sh '''
-                    echo "Initializing"
-                ''' 
+            steps { 
+                script{
+                    if (kubectl get pods | grep 'hello-world'){
+                        sh "echo 'pod already there...skipping"
+                    }
+                    else{
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh '''
+                                echo "Initializing"
+                            '''
+                        }
+                    }
+                }
             }
         }
         stage ('Build Application') {
@@ -155,12 +164,17 @@ pipeline{
     
         stage('App Deploy-EKS') {
             steps{
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    kubernetesDeploy(
-                        configs: 'app-deploy.yaml',
-                        kubeconfigId: 'k8s',
-                        enableConfigSubstitution: true
-                    )
+                script{
+                    if (kubectl get pods | grep 'hello-world'){
+                        sh "echo 'pod already there...skipping"
+                    }
+                    else {
+                        kubernetesDeploy(
+                            configs: 'app-deploy.yaml',
+                            kubeconfigId: 'k8s',
+                            enableConfigSubstitution: true
+                        )
+                    }
                 }
             }    
         }
