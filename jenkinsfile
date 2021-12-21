@@ -163,7 +163,7 @@ pipeline{
                 
             }    
         }
-        stage('App Deploy-EKS') {
+        stage('Expose to LB-EKS') {
             steps{
                 kubernetesDeploy(
                     configs: 'app-service.yaml',
@@ -183,7 +183,7 @@ pipeline{
                 
             }    
         }
-        stage('Sample LB Expose-EKS') {
+        stage('Sample Expose to LB-EKS') {
             steps{
                 kubernetesDeploy(
                     configs: 'yeasy-service.yaml',
