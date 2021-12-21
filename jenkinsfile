@@ -155,15 +155,16 @@ pipeline{
     
         stage('App Deploy-EKS') {
             steps{
-                kubernetesDeploy(
-                    configs: 'app-deploy.yaml',
-                    kubeconfigId: 'k8s',
-                    enableConfigSubstitution: true
-                )
-                
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    kubernetesDeploy(
+                        configs: 'app-deploy.yaml',
+                        kubeconfigId: 'k8s',
+                        enableConfigSubstitution: true
+                    )
+                }
             }    
         }
-        stage('Expose to LB-EKS') {
+        /*stage('Expose to LB-EKS') {
             steps{
                 kubernetesDeploy(
                     configs: 'app-service.yaml',
@@ -192,6 +193,15 @@ pipeline{
                 )
                 
             }    
+        }*/
+        stage('last'){
+            steps{
+                script{
+                    sh"""
+                    echo "end of pipeline"
+                    """
+                }
+            }
         }
     }
 }
