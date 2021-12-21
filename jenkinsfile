@@ -17,10 +17,10 @@ pipeline{
             }
             steps { 
                 script {
-                    error "This pipeline stops here! Its sunday---ENJOY!!!"
                     sh '''
                         echo "This is sunday...No builds on weekend...Enjoy!!!"
                     '''
+                    error "This pipeline stops here! Its sunday---ENJOY!!!"
                 }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh '''
