@@ -187,15 +187,16 @@ pipeline{
         stage('App Deploy-EKS') {
             steps{
                 script{
-                    def podExist = sh(script: "sudo kubectl get pods hello-world", returnStdout: true) == 0
-                    echo '$podExist'
-                    if(!podExist){
+                    def podExist = sh(returnStdout: true, script: "sudo kubectl get pods hello-world")
+                    if (podExist.contains("hello-world")) {
+                        println("application is already deployed")
+                    }else {
                         kubernetesDeploy(
                             configs: 'app-deploy.yaml',
                             kubeconfigId: 'k8s',
                             enableConfigSubstitution: true
                         )
-                    }
+                    }                
 
                 }
             }   
