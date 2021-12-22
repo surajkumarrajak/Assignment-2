@@ -150,6 +150,21 @@ pipeline{
                     sh "aws s3 cp /home/lab/Assignment-2/terraform/ s3://assignment-2-s3/ --recursive"
                 }
             }
+        }
+        stage('EKS Provision') {
+            steps {
+                def eksExist = sh(returnStdout: true, script: "sudo aws eks list-clusters")
+                if (eksExist.contains("assignment-eks")) {
+                        println("EKS cluster is already provisioned")
+                }else {
+                    /*dir("terraform"){
+                        sh 'terraform init'
+                        sh 'terraform plan -out=output.txt'
+                        sh 'terraform apply output.txt'
+                    }*/
+                    println("skipping for now")
+                }
+            }
             post {
                 success{
                     emailext (
@@ -160,18 +175,8 @@ pipeline{
                         )
                 }
             }
-        }
-       /* stage('EKS Provision') {
-            steps {
-                dir("terraform"){
-                    sh 'terraform init'
-                    sh 'terraform plan -out=output.txt'
-                    sh 'terraform apply output.txt'
-                }
-            }
-            
 
-        }*/
+        }
         stage('Approval') {
             // no agent, so executors are not used up when waiting for approvals
             agent none
@@ -201,36 +206,54 @@ pipeline{
                 }
             }   
         }
-        /*stage('Expose to LB-EKS') {
+        stage('Expose to LB-EKS') {
             steps{
-                kubernetesDeploy(
-                    configs: 'app-service.yaml',
-                    kubeconfigId: 'k8s',
-                    enableConfigSubstitution: true
-                )
-                
+                script{
+                    def serviceExist = sh(returnStdout: true, script: "sudo kubectl get svc app-service")
+                    if (serviceExist.contains("app-service")){
+                        println("load balancer service already deployed")
+                    } else {
+                        kubernetesDeploy(
+                            configs: 'app-service.yaml',
+                            kubeconfigId: 'k8s',
+                            enableConfigSubstitution: true
+                        )
+                    }
+                }
             }    
         }
         stage('Sample Deploy-EKS') {
             steps{
-                kubernetesDeploy(
-                    configs: 'yeasy-deploy.yaml',
-                    kubeconfigId: 'k8s',
-                    enableConfigSubstitution: true
-                )
-                
-            }    
+                script{
+                    def serviceExist = sh(returnStdout: true, script: "sudo kubectl get pods simple-web")
+                    if (serviceExist.contains("simple-web")){
+                        println("simple web is already deployed")
+                    } else {
+                        kubernetesDeploy(
+                            configs: 'yeasy-deploy.yaml',
+                            kubeconfigId: 'k8s',
+                            enableConfigSubstitution: true
+                        )
+                    }    
+                }
+            }   
         }
         stage('Sample Expose to LB-EKS') {
             steps{
-                kubernetesDeploy(
-                    configs: 'yeasy-service.yaml',
-                    kubeconfigId: 'k8s',
-                    enableConfigSubstitution: true
-                )
-                
-            }    
-        }*/
+                script{
+                    def serviceExist = sh(returnStdout: true, script: "sudo kubectl get svc yeasy-service")
+                    if (serviceExist.contains("yeasy-service")){
+                        println("yeasy-service load balancer is already deployed")
+                    } else {
+                        kubernetesDeploy(
+                            configs: 'yeasy-service.yaml',
+                            kubeconfigId: 'k8s',
+                            enableConfigSubstitution: true
+                        )
+                    }
+                }
+            }
+        }
         stage('last'){
             steps{
                 script{
