@@ -134,15 +134,6 @@ pipeline{
                     sh "aws s3 cp /home/lab/Assignment-2/terraform/ s3://assignment-2-s3/ --recursive"
                 }
             }
-        }
-        stage('EKS Provision') {
-            steps {
-                dir("terraform"){
-                    sh 'terraform init'
-                    sh 'terraform plan -out=output.txt'
-                    sh 'terraform apply output.txt'
-                }
-            }
             post {
                 success{
                     emailext (
@@ -153,8 +144,18 @@ pipeline{
                         )
                 }
             }
-
         }
+       /* stage('EKS Provision') {
+            steps {
+                dir("terraform"){
+                    sh 'terraform init'
+                    sh 'terraform plan -out=output.txt'
+                    sh 'terraform apply output.txt'
+                }
+            }
+            
+
+        }*/
         stage('Approval') {
             // no agent, so executors are not used up when waiting for approvals
             agent none
