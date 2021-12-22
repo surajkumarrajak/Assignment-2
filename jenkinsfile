@@ -38,7 +38,7 @@ pipeline{
                         echo "${podExist}"
                     '''
                     if (podExist.contains("hello-world")) {
-                        println("The line is found")){
+                        println("The line is found")
                         echo "existe"
                     }else{
                         error
