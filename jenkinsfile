@@ -171,18 +171,17 @@ pipeline{
         stage('App Deploy-EKS') {
             steps{
                 script{
-                    if ( podExist == 'hello-world' ){
-                        echo 'skipping step'
-                    } 
-                    else {
+                    def podExist = sh(script: "kubectl get pods hello-world", returnStdout: true) == 0
+                    if(!podExist){
                         kubernetesDeploy(
                             configs: 'app-deploy.yaml',
                             kubeconfigId: 'k8s',
                             enableConfigSubstitution: true
                         )
                     }
+
                 }
-            }    
+            }   
         }
         /*stage('Expose to LB-EKS') {
             steps{
