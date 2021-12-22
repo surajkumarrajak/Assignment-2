@@ -153,18 +153,21 @@ pipeline{
         }
         stage('EKS Provision') {
             steps {
-                def eksExist = sh(returnStdout: true, script: "sudo aws eks list-clusters")
-                if (eksExist.contains("assignment-eks")) {
+                script{
+                    def eksExist = sh(returnStdout: true, script: "sudo aws eks list-clusters")
+                    if (eksExist.contains("assignment-eks")) {
                         println("EKS cluster is already provisioned")
-                }else {
+                    }else {
                     /*dir("terraform"){
                         sh 'terraform init'
                         sh 'terraform plan -out=output.txt'
                         sh 'terraform apply output.txt'
                     }*/
-                    println("skipping for now")
+                        println("skipping for now")
+                    }
                 }
             }
+        }
             post {
                 success{
                     emailext (
