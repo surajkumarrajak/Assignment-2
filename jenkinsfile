@@ -9,7 +9,7 @@ pipeline{
         IMAGE_TAG="hello-world"
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
         TERRAFORM_DIR = "$WORKSPACE/terraform"
-        podExist = "sh(script: "sudo kubectl get pods hello-world | grep -o 'hello-world'" )"
+        podExist = "sudo kubectl get pods hello-world | grep -o 'hello-world'"
     }
     stages {
         stage ('initialize'){
