@@ -1,5 +1,6 @@
 def skipRemainingStages = false
 def week = [1:'Sunday', 2:'Monday', 3:'Tuesday', 4:'Wednesday', 5:'Thursday', 6:'Friday', 7:'Saturday']
+def podExist = 'kubctl get pods | grep -o 'hello-world''
 pipeline{
     agent any
     environment {
@@ -20,7 +21,7 @@ pipeline{
                     sh '''
                         echo "This is sunday...No builds on weekend...Enjoy!!!"
                     '''
-                    error "This pipeline stops here! Its sunday---ENJOY!!!"
+                    abort "This pipeline stops here! Its sunday---ENJOY!!!"
                 }
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh '''
@@ -167,13 +168,18 @@ pipeline{
 
     
         stage('App Deploy-EKS') {
-            steps{
-                kubernetesDeploy(
-                    configs: 'app-deploy.yaml',
-                    kubeconfigId: 'k8s',
-                    enableConfigSubstitution: true
-                )
-                    
+            script{
+                if [podExist == 'hello-world']{
+                    echo 'skipping step'
+                } else {
+                    steps{
+                        kubernetesDeploy(
+                            configs: 'app-deploy.yaml',
+                            kubeconfigId: 'k8s',
+                            enableConfigSubstitution: true
+                        )
+                    }
+                }
             }    
         }
         /*stage('Expose to LB-EKS') {
