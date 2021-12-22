@@ -227,7 +227,7 @@ pipeline{
         stage('Sample Deploy-EKS') {
             steps{
                 script{
-                    def serviceExist = sh(returnStdout: true, script: "sudo kubectl get pods simple-web")
+                    def serviceExist = sh(returnStdout: true, script: "sudo kubectl get pods")
                     if (serviceExist.contains("simple-web")){
                         println("simple web is already deployed")
                     } else {
