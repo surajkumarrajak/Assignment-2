@@ -168,11 +168,12 @@ pipeline{
 
     
         stage('App Deploy-EKS') {
-            script{
-                if ( podExist == 'hello-world' ){
-                    echo 'skipping step'
-                } else {
-                    steps{
+            steps{
+                script{
+                    if ( podExist == 'hello-world' ){
+                        echo 'skipping step'
+                    } 
+                    else {
                         kubernetesDeploy(
                             configs: 'app-deploy.yaml',
                             kubeconfigId: 'k8s',
