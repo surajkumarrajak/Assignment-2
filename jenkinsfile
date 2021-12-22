@@ -194,7 +194,7 @@ pipeline{
         stage('App Deploy-EKS') {
             steps{
                 script{
-                    def podExist = sh(returnStdout: true, script: "sudo kubectl get pods hello-world")
+                    def podExist = sh(returnStdout: true, script: "sudo kubectl get pods")
                     if (podExist.contains("hello-world")) {
                         println("application is already deployed")
                     }else {
@@ -211,7 +211,7 @@ pipeline{
         stage('Expose to LB-EKS') {
             steps{
                 script{
-                    def serviceExist = sh(returnStdout: true, script: "sudo kubectl get svc app-service")
+                    def serviceExist = sh(returnStdout: true, script: "sudo kubectl get svc")
                     if (serviceExist.contains("app-service")){
                         println("load balancer service already deployed")
                     } else {
@@ -243,7 +243,7 @@ pipeline{
         stage('Sample Expose to LB-EKS') {
             steps{
                 script{
-                    def serviceExist = sh(returnStdout: true, script: "sudo kubectl get svc yeasy-service")
+                    def serviceExist = sh(returnStdout: true, script: "sudo kubectl get svc")
                     if (serviceExist.contains("yeasy-service")){
                         println("yeasy-service load balancer is already deployed")
                     } else {
