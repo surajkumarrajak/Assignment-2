@@ -33,8 +33,10 @@ pipeline{
         stage('Check pods'){
             steps{
                 script{
-                    echo "${podExist}"
-                    if( "${podExist}" == 'hello-world'){
+                    sh '''
+                        echo "${podExist}"
+                    '''
+                    if( "${podExist}" == "hello-world"){
                         echo "existe"
                     }else{
                         error
