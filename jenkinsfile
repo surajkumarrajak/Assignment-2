@@ -169,7 +169,7 @@ pipeline{
     
         stage('App Deploy-EKS') {
             script{
-                if [podExist == 'hello-world']{
+                if ( podExist == 'hello-world' ){
                     echo 'skipping step'
                 } else {
                     steps{
