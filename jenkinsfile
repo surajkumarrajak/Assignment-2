@@ -171,6 +171,7 @@ pipeline{
             steps{
                 script{
                     def podExist = sh(script: "sudo kubectl get pods hello-world", returnStdout: true) == 0
+                    echo '$podExist'
                     if(!podExist){
                         kubernetesDeploy(
                             configs: 'app-deploy.yaml',
