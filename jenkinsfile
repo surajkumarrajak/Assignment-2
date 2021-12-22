@@ -29,6 +29,19 @@ pipeline{
                 }
             }
         }
+        stage('Check pods'){
+            steps{
+                script{
+                    def podExist = sh(script: "sudo kubectl get pods hello-world", returnStdout: true) == 0
+                    echo '$podExist'
+                    if(!podExist){
+                        echo "existe"
+                    }else{
+                        error
+                    }
+                }
+            }       
+        }
         stage ('Build Application') {
             steps {
                 sh 'mvn -f my-app/pom.xml clean package'
