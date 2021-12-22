@@ -33,7 +33,7 @@ pipeline{
             steps{
                 script{
                     def podExist = sh(script: "sudo kubectl get pods hello-world", returnStdout: true) == 0
-                    echo '$podExist'
+                    echo podExist
                     if(!podExist){
                         echo "existe"
                     }else{
