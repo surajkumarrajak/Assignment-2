@@ -18,4 +18,4 @@ spec:
       - name: app
         image: 270291036751.dkr.ecr.us-east-2.amazonaws.com/assignment-2:hello-world-lts
         ports:
-        - containerPort: 8081
+        - containerPort: 80
