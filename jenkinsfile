@@ -30,7 +30,7 @@ pipeline{
                 }
             }
         }
-        stage('Check pods'){
+       /* stage('Check pods'){
             steps{
                 script{
                     def podExist = sh(returnStdout: true, script: "sudo kubectl get pods hello-world")
@@ -45,7 +45,7 @@ pipeline{
                     }
                 }
             }       
-        }
+        }*/
         stage ('Build Application') {
             steps {
                 sh 'mvn -f my-app/pom.xml clean package'
@@ -191,7 +191,7 @@ pipeline{
         }
 
     
-        stage('App Deploy-EKS') {
+        /*stage('App Deploy-EKS') {
             steps{
                 script{
                     def podExist = sh(returnStdout: true, script: "sudo kubectl get pods")
@@ -255,7 +255,7 @@ pipeline{
                     }
                 }
             }
-        }
+        }*/
         stage('End of pipeline'){
             steps{
                 script{
